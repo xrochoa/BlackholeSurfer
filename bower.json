@@ -1,0 +1,19 @@
+{
+  "name": "Mountain",
+  "version": "0.0.0",
+  "authors": [
+    "Xavier Reyes Ochoa <xrochoa@users.noreply.github.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "enchant.js-builds": "~0.8.2",
+    "jquery": "~2.1.3"
+  }
+}
