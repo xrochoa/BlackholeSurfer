@@ -14,17 +14,23 @@ var SceneStart = enchant.Class.create(enchant.Scene, {
         var gameSpeed = (200 / 3) * levels; //fps...change after gamelenght
 
 
-        var base = new Base(gameLenght, gameSpeed);
+
+
+        var base = new Block(bgData.base.x, bgData.base.y, bgData.base.asset(), gameLenght, gameSpeed);
+        base.baseOrigin();
         this.addChild(base); // add to canvas
 
 
-        var top = new Top(gameLenght, gameSpeed);
+        var top = new Block(bgData.top.x, bgData.top.y, bgData.top.asset(), gameLenght, gameSpeed);
+        top.topOrigin(gameLenght);
+
         this.addChild(top); // add to canvas
 
 
         for (var row = 0; row < levels; row++) {
             for (var col = 0; col < 5; col++) {
-                var block = new Block(gameLenght, gameSpeed, row, col);
+                var block = new Block(bgData.block.x, bgData.block.y, bgData.block.asset(), gameLenght, gameSpeed);
+                block.blockOrigin(row, col);
                 this.addChild(block); // add to canvas
             }
         }
@@ -91,7 +97,16 @@ var SceneStart = enchant.Class.create(enchant.Scene, {
 
 
         this.on('enterframe', function() {
-            var hits = Top.intersect(Enemy);
+            var hits = Block.intersect(Enemy);
+            
+            
+            
+            
+            //////it seems that top is not being recognized...it only worked for Top as a class not a valiable or in this case Block as a class!!!!!
+            
+            
+            
+            
             for (var i = 0, len = hits.length; i < len; i++) {
 
                 this.removeChild(hits[i][1]);
@@ -107,7 +122,7 @@ var SceneStart = enchant.Class.create(enchant.Scene, {
 
         this.on('enterframe', function() {
 
-            var hits = Top.intersect(Player);
+            var hits = top.intersect(Player);
             for (var i = 0, len = hits.length; i < len; i++) {
                 hits[i][1].tl.moveTo(400, 100, 100);
             }
@@ -128,7 +143,7 @@ var SceneStart = enchant.Class.create(enchant.Scene, {
                 this.removeChild(hits[i][0]);
                 this.removeChild(hits[i][1]);
                 game.stop();
-                label = new Label('Fucking Over');
+                label = new Label(enchant.ENV.VERSION);
                 label.x = (this.width / 2) - (label.width / 2);
                 label.y = 400;
                 label.backgroundColor = 'black';
